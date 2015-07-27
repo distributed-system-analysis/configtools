@@ -1,0 +1,38 @@
+#! /bin/bash
+# -*- mode: shell-script -*-
+
+tmp=/tmp/configtools.test.$$
+
+mkdir -p $tmp
+
+# trap "rm -rf $tmp" EXIT INT QUIT
+
+function run_test {
+    testnum=$1
+    shift
+    dir=$1
+    
+    eval "$*" > $tmp/test.out 2>&1
+
+    echo Test $testnum
+    if diff $tmp/test.out gold/$dir/$testnum.out ; then
+        echo PASS
+    else
+        echo FAIL
+    fi
+}
+
+make
+. ./profile
+
+run_test 1 getconf.py --config samples/foo.conf bar foo
+run_test 2 getconf.py --config samples/foo.conf baz foo
+run_test 3 getconf.py --config samples/foo.conf -a foo
+run_test 4 getconf.py --config samples/foo.conf foo foo
+
+run_test 1 gethosts.py --config samples/hosts.conf -a
+run_test 2 gethosts.py --config samples/hosts.conf -c clients
+run_test 3 gethosts.py --config samples/hosts.conf -c servers
+run_test 4 gethosts.py --config samples/hosts.conf -L
+
+    
