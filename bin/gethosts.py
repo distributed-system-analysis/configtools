@@ -3,13 +3,10 @@ from __future__ import print_function
 
 import sys
 import os
-import configtools 
+import configtools
 from optparse import make_option
 
 def main(conf, args, opts):
-    if not conf:
-        return 1
-
     sep = ','
     if opts.list:
         sep = ' '
@@ -55,5 +52,7 @@ options = [
 if __name__ == '__main__':
     opts, args = configtools.parse_args(options)
     conf, files = configtools.init(opts)
+    if not conf:
+        sys.exit(1)
     status = main(conf, args, opts)
     sys.exit(status)
