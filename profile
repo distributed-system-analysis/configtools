@@ -1,16 +1,13 @@
 # -*- mode: shell-script -*-
 if [[ -z "$TOP" ]]; then
-    _topset=1
     # keep going up until we get to the rpm directory
-    export TOP=$(dirname $PWD)
-    while [[ ! -d $TOP/configtools ]]; do
+    export TOP=$PWD
+    while [[ ! -f $TOP/setup.py && ! -d $TOP/configtools ]]; do
         TOP=$(dirname $TOP)
         if [[ "$TOP" = "/home/$USER" || "$TOP" = "/home" || "$TOP" = "/" ]]; then
             break
         fi
     done
-else
-    _topset=0
 fi
 prefix=$TOP
 
@@ -30,15 +27,15 @@ ppathins() {
 
 # So *always* use the in-tree version of configtools here.
 # prefix better be right at this point
-if [[ ! -f $prefix/configtools/bin/getconf.2.py ]]
+if [[ ! -f $prefix/build/bin/getconf.py ]]
 then
-    echo "Cannot find getconf.py"
+    echo "Cannot find getconf.py: $prefix/build/bin/getconf.py"
 else
-    (cd $prefix/configtools; make > /dev/null 2>&1)
+    (cd $prefix; make > /dev/null 2>&1)
     if [[ $? -eq 0 ]]; then
-        pathins $prefix/configtools/build/bin
+        pathins $prefix/build/bin
         export PYTHONPATH
-        ppathins $prefix/configtools/build/lib
+        ppathins $prefix/build/lib
     fi
 fi
 unset prefix
