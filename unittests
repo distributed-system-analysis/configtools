@@ -11,7 +11,7 @@ function run_test {
     testnum=$1
     shift
     dir=$1
-    
+
     eval "$*" > $tmp/test.out 2>&1
 
     echo Test $testnum
@@ -34,5 +34,3 @@ run_test 1 gethosts.py --config samples/hosts.conf -a
 run_test 2 gethosts.py --config samples/hosts.conf -c clients
 run_test 3 gethosts.py --config samples/hosts.conf -c servers
 run_test 4 gethosts.py --config samples/hosts.conf -L
-
-    
