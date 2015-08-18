@@ -12,7 +12,7 @@ Available via PyPI, see http://pypi.python.org/configtools
 pip install configtools
 ```
 
-### Fedora COPR Available via Fedora's COPR, see
+### Fedora RPMs Available via Fedora's COPR, see
 http://copr.fedoraproject.org/coprs/portante/configtools/
 
 To make your own COPR build, first make sure the `configtools.spec` file points
