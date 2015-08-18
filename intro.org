@@ -210,4 +210,3 @@ servers = gprfs00[3-8]
 
 [fn:1]  if necessary, that limitation gives an ugly way to get a
 literal 'foo[1-3]' by specifying 'foo[][1-3]'.
- 
