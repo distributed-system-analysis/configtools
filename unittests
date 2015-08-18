@@ -7,13 +7,14 @@ mkdir -p $tmp
 
 # trap "rm -rf $tmp" EXIT INT QUIT
 
+ver=$(python -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 python setup.py build
 
 # So *always* use the in-tree version of configtools here.
 # prefix better be right at this point
-if [[ ! -f build/scripts-2.7/getconf.py ]]
+if [[ ! -f build/scripts-$ver/getconf.py ]]
 then
-    echo "Cannot find getconf.py: build/scripts-2.7/getconf.py" 1>&2
+    echo "Cannot find getconf.py: build/scripts-$ver/getconf.py" 1>&2
     exit 1
 fi
 
@@ -26,7 +27,7 @@ ppathins() {
 export PYTHONPATH
 ppathins $PWD/build/lib
 
-bin=$PWD/build/scripts-2.7
+bin=$PWD/build/scripts-$ver
 
 function run_test {
     testnum=$1
