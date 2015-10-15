@@ -49,6 +49,7 @@ run_test 1 getconf.py --config samples/foo.conf bar foo
 run_test 2 getconf.py --config samples/foo.conf baz foo
 run_test 3 getconf.py --config samples/foo.conf -a foo
 run_test 4 getconf.py --config samples/foo.conf foo foo
+run_test 5 getconf.py --config samples/foo.conf -d
 
 run_test 1 gethosts.py --config samples/hosts.conf -a
 run_test 2 gethosts.py --config samples/hosts.conf -c clients

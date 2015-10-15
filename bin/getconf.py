@@ -7,9 +7,6 @@ import configtools
 from optparse import make_option
 
 def main(conf, args, opts):
-    if opts.dump:
-        conf.write(sys.stdout)
-        return 0
 
     if opts.all:
         for sec in args:
@@ -26,12 +23,13 @@ def main(conf, args, opts):
     if opts.list:
         sep = ' '
 
-    option = args[0]
-    for sec in args[1:]:
-        if conf.has_section(sec):
-            if conf.has_option(sec, option):
-                configtools.print_list(configtools.get_list(conf.get(sec, option)), sep)
-                return 0
+    if args:
+        option = args[0]
+        for sec in args[1:]:
+            if conf.has_section(sec):
+                if conf.has_option(sec, option):
+                    configtools.print_list(configtools.get_list(conf.get(sec, option)), sep)
+                    return 0
     return 1
 
 options = [
@@ -42,10 +40,23 @@ options = [
 ]
 
 if __name__ == '__main__':
-    opts, args = configtools.parse_args(options, usage='Usage: getconf.py [options] <item>|-a <section> [<section> ...]')
+    opts, args = configtools.parse_args(options, usage='Usage:\n'
+'getconf.py -d|--dump  - dumps the fully-resolved config file.\n'
+'getconf.py -L|--listfiles - dumps the list of config files to be resolved.\n'
+'getconf.py -a|--all <section> - prints all the items and their values found in the section.\n'
+'getconf.py <item> <section> [<section>...] - prints the value of <item> as found in the <section>.\n'
+'                                             If there is a list of sections, the <item> is looked\n'
+'                                             for in each <section> from left to right: the first\n'
+'                                             value found in the scan is printed.')
+
     conf, files = configtools.init(opts)
     if not conf:
         sys.exit(1)
+
+    if opts.dump:
+        conf.write(sys.stdout)
+        sys.exit(0)
+
     if opts.listfiles:
         files.reverse()
         print(files)
