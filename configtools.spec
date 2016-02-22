@@ -5,7 +5,7 @@ Summary:     The configtools module
 
 License:     GPLv3+
 URL:         http://pypi.python.org/pypi/%{name}
-Source0:     http://pypi.python.org/packages/source/e/%{name}/%{name}-%{version}.tar.gz
+Source0:     http://pypi.python.org/packages/source/c/%{name}/%{name}-%{version}.tar.gz
 Buildarch:   noarch
 
 BuildRequires:	python2-devel
