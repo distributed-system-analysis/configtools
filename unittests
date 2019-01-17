@@ -1,7 +1,7 @@
 #! /bin/bash
 # -*- mode: shell-script -*-
 
-tmp=/tmp/configtools.test.$$
+tmp=/var/tmp/configtools-unittests
 
 mkdir -p $tmp
 
@@ -29,6 +29,8 @@ ppathins $PWD/build/lib
 
 bin=$PWD/build/scripts-$ver
 
+cp -r samples/ $tmp/
+
 function run_test {
     testnum=$1
     shift
@@ -38,19 +40,20 @@ function run_test {
     eval "$bin/$dir $*" > $tmp/test.out 2>&1
 
     echo Test $testnum
-    if diff $tmp/test.out gold/$dir/$testnum.out ; then
+    if diff -c gold/$dir/$testnum.out $tmp/test.out ; then
         echo PASS
     else
         echo FAIL
     fi
 }
 
-run_test 1 getconf.py --config samples/foo.conf bar foo
-run_test 2 getconf.py --config samples/foo.conf baz foo
-run_test 3 getconf.py --config samples/foo.conf -a foo
-run_test 4 getconf.py --config samples/foo.conf foo foo
+run_test 1 getconf.py --config $tmp/samples/foo.conf bar foo
+run_test 2 getconf.py --config $tmp/samples/foo.conf baz foo
+run_test 3 getconf.py --config $tmp/samples/foo.conf -a foo
+run_test 4 getconf.py --config $tmp/samples/foo.conf foo foo
+run_test 5 getconf.py --config $tmp/samples/foo.conf -L
 
-run_test 1 gethosts.py --config samples/hosts.conf -a
-run_test 2 gethosts.py --config samples/hosts.conf -c clients
-run_test 3 gethosts.py --config samples/hosts.conf -c servers
-run_test 4 gethosts.py --config samples/hosts.conf -L
+run_test 1 gethosts.py --config $tmp/samples/hosts.conf -a
+run_test 2 gethosts.py --config $tmp/samples/hosts.conf -c clients
+run_test 3 gethosts.py --config $tmp/samples/hosts.conf -c servers
+run_test 4 gethosts.py --config $tmp/samples/hosts.conf -L

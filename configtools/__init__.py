@@ -26,14 +26,13 @@ def file_list(root):
     conf.read(root)
     try:
         dirlist = conf.get("config", "path").replace(' ', '').split(',')
-    except:
+    except Exception:
         dirlist = []
     try:
         files = conf.get("config", "files").replace(' ', '').split(',')
-    except:
+    except Exception:
         files = []
 
-    
     root = os.path.abspath(root)
     # all relative pathnames will be relative to the rootdir
     rootdir = os.path.dirname(root)
@@ -45,7 +44,7 @@ def file_list(root):
     # import pdb; pdb.set_trace()
     for d in dirlist:
         for f in files:
-            fnm = "%s/%s" % (d, f)
+            fnm = os.path.join(d, f)
             if fnm in flist:
                 continue
             if os.access(fnm, os.F_OK):
@@ -60,7 +59,7 @@ def init(opts):
     if opts.filename:
         conf_file = opts.filename
     elif 'CONFIG' in os.environ:
-        conf_file= os.environ['CONFIG']
+        conf_file = os.environ['CONFIG']
     else:
         return (None, [])
 
@@ -197,4 +196,3 @@ def do_cmd_with_stdout(cmd, dbg=False):
         return p.stdout.read()
     else:
         return ""
-
