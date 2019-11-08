@@ -8,7 +8,7 @@ URL:         https://pypi.python.org/pypi/%{name}
 Source0:     https://pypi.python.org/packages/source/c/%{name}/%{name}-%{version}.tar.gz
 Buildarch:   noarch
 
-BuildRequires:	python2-devel
+BuildRequires:	python3-devel
 
 %description
 The configtools python module and the getconf.py command-line script.
