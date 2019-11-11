@@ -7,8 +7,11 @@ License:     GPLv3+
 URL:         https://pypi.python.org/pypi/%{name}
 Source0:     https://pypi.python.org/packages/source/c/%{name}/%{name}-%{version}.tar.gz
 Buildarch:   noarch
+Requires:    python3
 
 BuildRequires:	python3-devel
+%define __python /usr/bin/python3
+
 
 %description
 The configtools python module and the getconf.py command-line script.
