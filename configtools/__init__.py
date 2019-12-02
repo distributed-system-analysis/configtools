@@ -3,12 +3,9 @@ from __future__ import print_function
 
 import os, sys
 
-try:
-    # python3
-    from configparser import SafeConfigParser
-except:
-    from ConfigParser import SafeConfigParser
-    
+# python3
+from configparser import ConfigParser
+
 from optparse import OptionParser
 
 import logging
@@ -22,7 +19,7 @@ def uniq(l):
 def file_list(root):
     # read the root file, get its [config] section
     # and use it to construct the file list.
-    conf = SafeConfigParser()
+    conf = ConfigParser()
     conf.read(root)
     try:
         dirlist = conf.get("config", "path").replace(' ', '').split(',')
@@ -33,7 +30,6 @@ def file_list(root):
     except:
         files = []
 
-    
     root = os.path.abspath(root)
     # all relative pathnames will be relative to the rootdir
     rootdir = os.path.dirname(root)
@@ -56,7 +52,7 @@ def file_list(root):
 def init(opts):
     """init"""
     # config file
-    conf = SafeConfigParser()
+    conf = ConfigParser()
     if opts.filename:
         conf_file = opts.filename
     elif 'CONFIG' in os.environ:
@@ -89,7 +85,7 @@ def parse_args(options=[], usage=None):
 
 def parse_range(s):
     """s is of the form <prefix>[<range>]<suffix>.
-       Parse and return the three components separately. 
+       Parse and return the three components separately.
     """
     pos = s.find('[')
     rpos = s.find(']')
@@ -115,7 +111,7 @@ def expand_range(s):
     prefix, suffix, rng = parse_range(s)
     if not rng:
         return ["%s%s" % (prefix, suffix)]
-    
+
     try:
         nfields = [x for x in rng.split('-')]
         if len(nfields) == 2:
@@ -176,10 +172,10 @@ def get_host_classes(conf):
 def log(cmd):
     logging.debug("%s: %s" % (hostname, cmd))
     logflush()
-    
+
 def logflush():
     logging.getLogger().handlers[0].flush()
-    
+
 def do_cmd(cmd, dbg=False):
     status = 0
     log(cmd)
@@ -197,4 +193,3 @@ def do_cmd_with_stdout(cmd, dbg=False):
         return p.stdout.read()
     else:
         return ""
-
