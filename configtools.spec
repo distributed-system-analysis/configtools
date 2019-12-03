@@ -4,11 +4,14 @@ Release:     1
 Summary:     The configtools module
 
 License:     GPLv3+
-URL:         http://pypi.python.org/pypi/%{name}
-Source0:     http://pypi.python.org/packages/source/c/%{name}/%{name}-%{version}.tar.gz
+URL:         https://pypi.python.org/pypi/%{name}
+Source0:     https://pypi.python.org/packages/source/c/%{name}/%{name}-%{version}.tar.gz
 Buildarch:   noarch
+Requires:    python3
 
-BuildRequires:	python2-devel
+BuildRequires:	python3-devel
+%define __python /usr/bin/python3
+
 
 %description
 The configtools python module and the getconf.py command-line script.
