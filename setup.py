@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name = 'configtools',
-      version = '0.3.1',
+      version = '0.3.2',
       description = 'Simple set of tools to read and parse configuration files for use by shell scripts',
       author = 'Nick Dokos',
       author_email = 'ndokos@redhat.com',
