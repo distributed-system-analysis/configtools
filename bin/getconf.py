@@ -7,10 +7,6 @@ import configtools
 from optparse import make_option
 
 def main(conf, args, opts):
-    if opts.dump:
-        conf.write(sys.stdout)
-        return 0
-
     if opts.all:
         for sec in args:
             if conf.has_section(sec):
@@ -36,9 +32,9 @@ def main(conf, args, opts):
 
 options = [
     make_option("-a", "--all", action="store_true", dest="all", help="print all items in section"),
-    make_option("-d", "--dump", action="store_true", dest="dump", help="print everything"),
+    make_option("-d", "--dump", action="store_true", dest="dump", help="print everything and exit"),
     make_option("-l", "--list", action="store_true", dest="list", help="print it as a shell list, translating commas to spaces"),
-    make_option("-L", "--listfiles", action="store_true", dest="listfiles", help="print the list of config files"),
+    make_option("-L", "--listfiles", action="store_true", dest="listfiles", help="print the list of config files and exit"),
 ]
 
 if __name__ == '__main__':
@@ -46,6 +42,10 @@ if __name__ == '__main__':
     conf, files = configtools.init(opts)
     if not conf:
         sys.exit(1)
+    if opts.dump:
+        conf.write(sys.stdout)
+        sys.exit(0)
+
     if opts.listfiles:
         files.reverse()
         print(files)
