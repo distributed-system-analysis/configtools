@@ -1,6 +1,8 @@
 # configtools
 Simple set of tools to read and parse configuration files for use by shell scripts
 
+## *** Obsolete ***
+
 ## Installation
 Simple setuptools based Python project, see `setup.py`, can be installed from
 source using `python setup.py install`.
